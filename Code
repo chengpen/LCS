@@ -1,0 +1,30 @@
+private static int Caculate(string s)
+        {
+            char[] c = s.ToCharArray();
+            Array.Reverse(c);
+            string reverseS = new string(c);
+            int[,] vec = new int[reverseS.Length+1,s.Length+1];
+
+            for(int i=1;i<s.Length+1;i++)
+            {
+                for(int j=1;j<s.Length+1;j++)
+                {
+                      //当字符串匹配到相同时累加长度增加1
+                    if(s[i-1]==reverseS[j-1])
+                    {
+                         //加上前一组
+                        vec[i, j] = vec[i - 1, j ] + 1;
+                    }
+                    else
+                    {
+                         //如果不相同则比较前一位和上一位哪个大取哪个
+                         //以此保证累加长度不变
+                        vec[i, j] = Math.Max(vec[i - 1, j], vec[i, j - 1]);
+                    }
+                }
+            }
+            //二维数组的最终一位即为结果
+            return s.Length-vec[s.Length, s.Length];
+            
+        }
+    }
